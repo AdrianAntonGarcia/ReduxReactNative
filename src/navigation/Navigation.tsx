@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {FavoritesScreen} from '../screens/Favorites';
-import {MoviesScreen} from '../screens/Movies';
+import {FavoritesScreen} from '../screens/FavoritesScreen';
+import {MoviesScreen} from '../screens/MoviesScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
