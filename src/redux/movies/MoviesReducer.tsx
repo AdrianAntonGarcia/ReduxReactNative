@@ -17,4 +17,5 @@ function moviesReducer(state: MoviesState = initialState, action: MovieAction) {
       return state;
   }
 }
+
 export default moviesReducer;
