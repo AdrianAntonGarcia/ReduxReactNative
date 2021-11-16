@@ -10,12 +10,33 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {RootState} from '../redux/store';
-import {getMovies} from '../redux/movies/MoviesActions';
+import {
+  getMovies,
+  Movie,
+  addFavorite,
+  removeFavorite,
+} from '../redux/movies/MoviesActions';
 
 export const MoviesScreen = () => {
-  const {movies} = useSelector((state: RootState) => state.moviesReducer);
+  const {movies, favorites} = useSelector(
+    (state: RootState) => state.moviesReducer,
+  );
   const dispatch = useDispatch();
   const fetchMovies = () => dispatch(getMovies());
+  const addToFavorites = (movie: Movie) => dispatch(addFavorite(movie));
+  const removeFromFavorites = (movie: Movie) => dispatch(removeFavorite(movie));
+  const handleAddFavorite = (movie: Movie) => {
+    addToFavorites(movie);
+  };
+  const handleRemoveFavorite = (movie: Movie) => {
+    removeFromFavorites(movie);
+  };
+  const exists = (movie: Movie) => {
+    if (favorites.filter(item => item.id === movie.id).length > 0) {
+      return true;
+    }
+    return false;
+  };
   useEffect(() => {
     fetchMovies();
   }, []);
@@ -61,7 +82,11 @@ export const MoviesScreen = () => {
                         {item.vote_count}
                       </Text>
                       <TouchableOpacity
-                        onPress={() => console.log('Added!')}
+                        onPress={() =>
+                          exists(item)
+                            ? handleRemoveFavorite(item)
+                            : handleAddFavorite(item)
+                        }
                         activeOpacity={0.7}
                         style={{
                           marginLeft: 14,
@@ -76,7 +101,7 @@ export const MoviesScreen = () => {
                         <MaterialIcons
                           color="orange"
                           size={32}
-                          name="favorite-outline"
+                          name={exists(item) ? 'favorite' : 'favorite-outline'}
                         />
                       </TouchableOpacity>
                     </View>
