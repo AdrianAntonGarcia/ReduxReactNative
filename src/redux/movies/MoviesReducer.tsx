@@ -1,7 +1,7 @@
-import {MovieAction} from './MoviesActions';
+import {MovieAction, Movie} from './MoviesActions';
 
 export interface MoviesState {
-  movies: any[];
+  movies: Movie[];
   favorites: any[];
 }
 const initialState = {
